@@ -1,0 +1,24 @@
+---
+- name: Ajouter l'Autorité de Certification (CA)
+  pfsensible.core.pfsense_ca:
+    name: "CAportal"
+    certificate: "{{ lookup('file', 'templates/ca_bundle.crt') }}"
+
+- name: Importer le certificat
+  pfsensible.core.pfsense_cert:
+    method: "import"
+    name: "Certportal"
+    ca: "CAportal"
+    certificate: "{{ lookup('file', 'templates/certificate.crt') }}"
+    key: "{{ lookup('file', 'templates/private.key') }}"
+    certtype: "user"  # ou "server" selon votre cas d'utilisation
+    state: present
+  register: cert_import
+
+- name: Récupérer l'ID du certificat
+  set_fact:
+    certificate_idtest: "{{ cert_import.diff.after.caref }}"
+    certificate_id: "{{ cert_import.diff.after.refid }}"
+- name: Afficher l'ID du certificat
+  debug:
+    msg: "L'ID du certificat est : {{ certificate_id }}  idtest: {{ certificate_id }}"

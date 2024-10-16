@@ -1,0 +1,12 @@
+users:
+  - name: "rakoto"
+    password: "{{ 'rakoto' | password_hash('bcrypt') }}"
+    descr: "Utilisateur 1 avec accès au portail captif"
+    priv:
+      - "user-services-captiveportal-login"  # Remplacez par le bon privilège
+  - name: "rabe"
+    password: "{{ 'rabe' | password_hash('bcrypt') }}"
+    descr: "Utilisateur 1 avec accès au portail captif"
+    priv:
+      - "user-services-captiveportal-login"  # Remplacez par le bon privilège
+     

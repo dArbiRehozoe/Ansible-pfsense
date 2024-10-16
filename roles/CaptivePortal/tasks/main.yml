@@ -1,0 +1,24 @@
+---
+
+- name: Créer et transférer portal.xml
+  template:
+    src: templates/portal.xml.j2
+    dest: /root/portal.xml  
+    
+ 
+- name: Préparer l'environnement avec sed
+  ansible.builtin.command: sed -i '' 's/<captiveportal><\/captiveportal>/ <captiveportal>/g' /cf/conf/config.xml
+
+- name: Ajouter le contenu de portal.xml dans config.xml avec sed
+  ansible.builtin.command: sed -i '' "/<captiveportal>/ r /root/portal.xml" /cf/conf/config.xml
+
+- name: Recharger la configuration avec /etc/rc.reload_all
+  ansible.builtin.command: /etc/rc.reload_all
+
+- name: Attendre 5 secondes avant de relancer la configuration captiveportal
+  ansible.builtin.wait_for:
+    timeout: 5
+
+- name: Configurer le Captive Portal avec /etc/rc.captiveportal_configure
+  ansible.builtin.command: /etc/rc.captiveportal_configure
+

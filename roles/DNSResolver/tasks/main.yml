@@ -1,0 +1,8 @@
+- name: Créer un Host Override dans DNS Resolver
+  pfsensible.core.pfsense_dns_resolver:
+    state: present
+    hosts:
+      - host: "lcbvv"                
+        domain: "42web.io"          
+        ip: "192.168.1.1"              
+        descr: "Override pour le portal" 

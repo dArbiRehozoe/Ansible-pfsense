@@ -1,0 +1,9 @@
+---
+- name: Automatisation de la configuration du Captive Portal sur pfSense
+  hosts: pfsense
+  become: yes
+  roles: 
+    - role: users
+    - role: SSLConf
+    - role: DNSResolver
+    - role: CaptivePortal

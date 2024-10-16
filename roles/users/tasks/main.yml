@@ -1,0 +1,14 @@
+- name: Créer les utilisateurs avec accès à la connexion du portail captif
+  pfsensible.core.pfsense_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    descr: "{{ item.descr }}"
+    scope: "user"
+    priv: "{{ item.priv }}"
+    state: present
+  loop: "{{ users }}"
+      
+- name: Afficher la confirmation des utilisateurs créés
+  debug:
+    msg: "L'utilisateur {{ item.name }} a été créé avec accès au portail captif."
+  loop: "{{ users }}"

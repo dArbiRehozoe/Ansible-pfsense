@@ -1,0 +1,11 @@
+portail_nom: "portal_mtefop"  # Nom du portail
+zone: "portal_mtefop"
+description: "Captive heloo"
+zoneid: "2"
+interface: "lan"
+maxprocperip: "100"
+idletimeout: "5"
+auth_method: "authserver"
+auth_server: "Local Auth - Local Database"
+httpsname: "lcbvv.42web.io"
+radmac_format: "default"
