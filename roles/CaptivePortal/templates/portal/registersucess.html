@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./logo-removebg-preview.png" type="image/png"> <!-- Chemin vers votre logo -->
+    
+    <title>Utilisateur crée - Portail sécurisé</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #e9f5ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 100px;
+        }
+
+        h1 {
+        
+            color: #2c3e50;
+            margin-top: 0px;
+            text-align: center;
+            width: 80%;
+        }
+
+        .welcome-container {
+            margin-top: -30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 65vh;
+            text-align: center;
+        }
+
+        h3 {
+            margin: 10px 0;
+            color: #34495e;
+        }
+
+        h4 {
+            margin: 5px 0;
+            color: #7f8c8d;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 250px;
+            height: 40px;
+            border-radius: 5px;
+            padding-left: 10px;
+            border: 1px solid #bdc3c7;
+            box-shadow: none;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        .submit-button {
+            width: 250px;
+            height: 40px;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            background-color: #3498db;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .submit-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="rep-logo-removebg-preview.png" class="logo" alt="">
+        <img src="logo-removebg-preview.png" class="logo" alt="">
+    </div>
+    <h1>Ministère du Travail, de l'emploi et de la fonction publique</h1>
+    
+    <div class="welcome-container">
+        <h4 style="margin-top: 0px;margin-bottom: 20px;">Votre inscription a été enregister avec succès. <br>Veuillez attendre la validation de votre administrateur</h4>
+     
+    <form>
+    <a  href="https://lcbvv.42web.io:8003/index.php?zone=portal_mtefop">
+      <input class="submit-button" type="button" value="Retourner à la page de connexion">
+    </a>
+   </form>
+   
+</div>
+</body>
+</html>

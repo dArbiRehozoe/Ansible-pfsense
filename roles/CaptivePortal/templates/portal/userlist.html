@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./logo-removebg-preview.png" type="image/png"> <!-- Chemin vers votre logo -->
+    <title>Liste des utilisateurs</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button.delete {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des utilisateurs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>N° Matricule</th>
+                <th>Nom complet</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="user-table-body">
+            <!-- Les lignes des utilisateurs seront insérées ici -->
+        </tbody>
+    </table>
+
+    <script>
+        const apiUrl = "https://192.168.1.1/api/v2/users";
+        const authHeader = "Basic YWRtaW46cmVob3pvZQ=="; // Vos informations d'identification encodées en Basic Auth
+
+        async function fetchUsers() {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        "Authorization": authHeader
+                    }
+                });
+                const data = await response.json();
+                if (data.code === 200) {
+                    const users = data.data.filter(user => !user.priv || user.priv.length === 0);
+                    displayUsers(users);
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des utilisateurs :", error);
+            }
+        }
+
+        function displayUsers(users) {
+            const tbody = document.getElementById('user-table-body');
+            tbody.innerHTML = ''; // Effacer les lignes existantes
+
+            users.forEach(user => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.descr || "Pas de nom complet"}</td>
+                    <td>
+                        <button onclick="addCaptivePortalRole(${user.id})">Ajouter un rôle de portail captif</button>
+                        <button class="delete" onclick="deleteUser(${user.id})">Supprimer l'utilisateur</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function addCaptivePortalRole(userId) {
+            const patchUrl = `https://192.168.1.1/api/v2/user`;
+            try {
+                const response = await fetch(patchUrl, {
+                    method: 'PATCH',
+                    headers: {
+                        "Authorization": authHeader,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: userId,
+                        priv: ["user-services-captiveportal-login"]
+                    })
+                });
+                const data = await response.json();
+                if (data.code === 200) {
+                    alert(`Rôle ajouté à l'utilisateur ${userId}`);
+                    fetchUsers(); // Actualiser la liste des utilisateurs
+                }
+            } catch (error) {
+                console.error("Erreur lors de l'ajout du rôle Captive Portal :", error);
+            }
+        }
+
+        async function deleteUser(userId) {
+            const deleteUrl = `https://192.168.1.1/api/v2/user?id=${userId}`;
+            try {
+                const response = await fetch(deleteUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        "Authorization": authHeader
+                    }
+                });
+                if (response.ok) {
+                    alert(`Utilisateur ${userId} supprimé`);
+                    fetchUsers(); // Actualiser la liste des utilisateurs
+                }
+            } catch (error) {
+                console.error("Erreur lors de la suppression de l'utilisateur :", error);
+            }
+        }
+
+        // Récupérer les utilisateurs au chargement de la page
+        fetchUsers();
+    </script>
+</body>
+</html>

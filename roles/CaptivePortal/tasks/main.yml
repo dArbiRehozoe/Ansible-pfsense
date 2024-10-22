@@ -1,4 +1,17 @@
 ---
+- name: Copier des fichiers de portal individuels vers pfSense
+  ansible.builtin.copy:
+    src: "templates/portal/{{ item }}"
+    dest: "/usr/local/www/{{ item }}"
+    owner: root
+    group: wheel
+    mode: '0644'
+  loop:
+    - "logo-removebg-preview.png"
+    - "registersucess.html"
+    - "register.html"
+    - "userlist.html"
+    - "rep-logo-removebg-preview.png"
 
 - name: Créer et transférer portal.xml
   template:
